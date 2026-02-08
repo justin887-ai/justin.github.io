@@ -3,291 +3,179 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pages</title>
+  <title>Words</title>
+
   <style>
     :root{
-      --text: #2b1b1f;
-      --muted: rgba(43, 27, 31, 0.62);
-      --pink: #ff5fa2;
-      --pink2: #ff86bf;
-      --pink3: rgba(255, 95, 162, 0.16);
-      --border: rgba(43, 27, 31, 0.10);
-      --shadow: 0 14px 34px rgba(0,0,0,0.08);
-      --radius: 22px;
+      --text:#2b1b1f;
+      --muted:rgba(43,27,31,0.55);
+      --pink:#ff5fa2;
+      --pink2:#ff86bf;
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
-    *{ box-sizing: border-box; }
+    *{ box-sizing:border-box; }
 
     body{
-      margin: 0;
-      font-family: var(--font);
-      color: var(--text);
-      background: transparent;
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:transparent;
     }
 
-    .page{
-      min-height: 100vh;
-      padding: 56px 18px 110px;
-      display: grid;
-      place-items: start center;
+    .wrap{
+      min-height:100vh;
+      padding:70px 18px 130px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
     }
 
-    .content{
-      width: min(860px, 100%);
+    .text{
+      max-width:860px;
+      width:100%;
+      font-size:19px;
+      line-height:1.85;
+      letter-spacing:0.15px;
     }
 
-    .title{
-      margin: 0 0 14px 0;
-      font-size: clamp(20px, 3.6vw, 30px);
-      font-weight: 750;
-      letter-spacing: 0.2px;
+    .text p{
+      margin:0 0 18px 0;
     }
 
-    .hint{
-      margin: 0 0 18px 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .textArea{
-      width: 100%;
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.66);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      padding: 22px 20px;
-      font-size: 16px;
-      line-height: 1.7;
-    }
-
-    .textArea p{ margin: 0 0 14px 0; }
-    .textArea p:last-child{ margin-bottom: 0; }
-
-    .navBar{
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 14px 14px 16px;
-      backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.72);
-      border-top: 1px solid rgba(43, 27, 31, 0.10);
+    .nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      padding:14px 18px 18px;
+      backdrop-filter:blur(12px);
+      background:rgba(255,255,255,0.70);
     }
 
     .navInner{
-      max-width: 860px;
-      margin: 0 auto;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    .counter{
-      color: var(--muted);
-      font-size: 13px;
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .dots{
-      display: inline-flex;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .dot{
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: rgba(43, 27, 31, 0.20);
-      border: 1px solid rgba(43, 27, 31, 0.10);
-    }
-
-    .dot.active{
-      background: linear-gradient(90deg, var(--pink), var(--pink2));
-      border-color: rgba(255, 95, 162, 0.35);
-      box-shadow: 0 6px 16px rgba(255, 95, 162, 0.22);
-    }
-
-    .btnRow{
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
+      max-width:860px;
+      margin:0 auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
     }
 
     button{
-      border: 1px solid rgba(255, 95, 162, 0.26);
-      background: rgba(255, 95, 162, 0.10);
-      color: var(--text);
-      border-radius: 999px;
-      padding: 11px 16px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      border:none;
+      border-radius:999px;
+      padding:12px 18px;
+      font-size:14px;
+      cursor:pointer;
+      color:white;
+      background:linear-gradient(90deg, var(--pink), var(--pink2));
+      transition:transform 120ms ease, opacity 120ms ease;
+    }
+
+    button.secondary{
+      background:rgba(255,95,162,0.15);
+      color:var(--text);
     }
 
     button:hover{
-      transform: translateY(-1px);
-      background: rgba(255, 95, 162, 0.14);
-      border-color: rgba(255, 95, 162, 0.34);
+      transform:translateY(-1px);
+      opacity:0.95;
     }
 
     button:disabled{
-      opacity: 0.45;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    button.primary{
-      background: linear-gradient(90deg, rgba(255, 95, 162, 0.95), rgba(255, 134, 191, 0.95));
-      border-color: rgba(255, 95, 162, 0.35);
-      color: white;
-    }
-
-    button.primary:hover{
-      background: linear-gradient(90deg, rgba(255, 95, 162, 1), rgba(255, 134, 191, 1));
-    }
-
-    .kbdHint{
-      color: var(--muted);
-      font-size: 12px;
-      width: 100%;
-      max-width: 860px;
-      margin: 10px auto 0;
-      text-align: center;
-    }
-
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(43, 27, 31, 0.14);
-      background: rgba(255, 255, 255, 0.65);
-      color: rgba(43, 27, 31, 0.80);
+      opacity:0.45;
+      cursor:not-allowed;
+      transform:none;
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
-    <div class="content">
-      <h1 class="title" id="pageTitle">Loading…</h1>
-      <p class="hint" id="pageHint"></p>
-      <div class="textArea" id="pageBody"></div>
-    </div>
+  <div class="wrap">
+    <div class="text" id="text"></div>
   </div>
 
-  <div class="navBar">
+  <div class="nav">
     <div class="navInner">
-      <div class="counter">
-        <span id="counterText">1 / 1</span>
-        <span class="dots" id="dots"></span>
-      </div>
-
-      <div class="btnRow">
-        <button id="btnBack" type="button">Back</button>
-        <button class="primary" id="btnNext" type="button">Next</button>
-      </div>
-    </div>
-
-    <div class="kbdHint">
-      Keyboard: <span class="kbd">←</span> <span class="kbd">→</span>
+      <button class="secondary" id="back">Back</button>
+      <button id="next">Next</button>
     </div>
   </div>
 
   <script>
     const pages = [
-      {
-        title: "Greeting",
-        hint: "Paste your opening here.",
-        body: `
-          <p></p>
-        `
-      },
-      {
-        title: "What I have been doing lately",
-        hint: "Keep it grounded and simple.",
-        body: `
-          <p></p>
-        `
-      },
-      {
-        title: "Reflections",
-        hint: "One idea at a time.",
-        body: `
-          <p></p>
-        `
-      },
-      {
-        title: "Memories",
-        hint: "Optional, gentle, and short.",
-        body: `
-          <p></p>
-        `
-      },
-      {
-        title: "Holiday as friends",
-        hint: "Clear, low pressure, and respectful.",
-        body: `
-          <p></p>
-        `
-      }
+      `
+        <p>Hi Kaylen,</p>
+        <p>I know this looks repetitive but yay its actually a website now, I wanted to talk to u a bit and I want to sound sincere, I'm planning this ahead so I know that u just finished a real good interview and everything went smoothly, I hope u can finish this it wont take u long i promise.</p>
+      `,
+      `
+        <p>Before I say anything and I'm adding this just now, I know I didn't surprise u in anyway lately and that's cruel of me and I promise none of this is forced I thought of this completely by myself and what u said yesterday was completely true I'm just hoping that u see that this was not somehthing I did because u said so but because I wanted to</p>
+        <p>I was the worst and when u were fragile and needing someone to listen I didn't do that I did just shrug off what u said and thats mean u should never have to stay with me and I guarantee that I'm not asking u to. I'm trying to sound fancy but u probably can see through me but everything here is coming from my heart and really what I've been feeling, for everything I just want to say I am sorry.</p>
+        <p>This was going to be that long paragraph that I sent u but mentally I have thought so much more so I just want to say it here, I think ur the bravest and strongest girl ever after everything this year, you went through so much work and got such an amazing set of results most people can only dream of but its not becuase of any talent or how smart u are even though u are quite smart. It's because u are so hardworking. Today everything finally ends and I'm so happy for u, u must feel so relieved.</p>
+      `,
+      `
+        <p>Before the next page, u have to promise me not to be mad.</p>
+      `,
+      `
+        <p>Do u really promise :3.</p>
+      `,
+      `
+        <p>Okeeee I guess u really promised hehe :)))</p>
+      `,
+      `
+        <p>Page 6 text goes here.</p>
+      `
+    ];
+
+    const backgrounds = [
+      "images/bg1.jpeg"", 
+      "",
+      "",
+      "",
+      "",
+      ""
     ];
 
     let i = 0;
 
-    const pageTitle = document.getElementById("pageTitle");
-    const pageHint = document.getElementById("pageHint");
-    const pageBody = document.getElementById("pageBody");
-    const counterText = document.getElementById("counterText");
-    const dotsEl = document.getElementById("dots");
-    const btnBack = document.getElementById("btnBack");
-    const btnNext = document.getElementById("btnNext");
+    const textEl = document.getElementById("text");
+    const backBtn = document.getElementById("back");
+    const nextBtn = document.getElementById("next");
 
-    function renderDots(){
-      dotsEl.innerHTML = "";
-      for(let k = 0; k < pages.length; k++){
-        const d = document.createElement("span");
-        d.className = "dot" + (k === i ? " active" : "");
-        dotsEl.appendChild(d);
+    function setBackground(url){
+      if(!url){
+        document.body.style.backgroundImage = "none";
+        document.body.style.backgroundColor = "transparent";
+        return;
       }
+      document.body.style.backgroundImage = `url('${url}')`;
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundRepeat = "no-repeat";
+      document.body.style.backgroundAttachment = "fixed";
     }
 
     function render(){
-      const total = pages.length;
-      if(i < 0) i = 0;
-      if(i > total - 1) i = total - 1;
-
-      pageTitle.textContent = pages[i].title;
-      pageHint.textContent = pages[i].hint || "";
-      pageBody.innerHTML = pages[i].body;
-
-      counterText.textContent = `${i + 1} / ${total}`;
-      renderDots();
-
-      btnBack.disabled = i === 0;
-      btnNext.disabled = i === total - 1;
-
+      textEl.innerHTML = pages[i];
+      setBackground(backgrounds[i]);
+      backBtn.disabled = i === 0;
+      nextBtn.disabled = i === pages.length - 1;
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    btnBack.addEventListener("click", () => { i -= 1; render(); });
-    btnNext.addEventListener("click", () => { i += 1; render(); });
+    backBtn.onclick = () => { i--; render(); };
+    nextBtn.onclick = () => { i++; render(); };
 
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "ArrowLeft"){ i -= 1; render(); }
-      if(e.key === "ArrowRight"){ i += 1; render(); }
+    document.addEventListener("keydown", e => {
+      if(e.key === "ArrowLeft" && i > 0){ i--; render(); }
+      if(e.key === "ArrowRight" && i < pages.length - 1){ i++; render(); }
     });
 
     render();
   </script>
 </body>
 </html>
+
 
