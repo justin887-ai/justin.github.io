@@ -1,0 +1,292 @@
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reader</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:rgba(255,255,255,0.06);
+      --panel2:rgba(255,255,255,0.09);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.68);
+      --border:rgba(255,255,255,0.12);
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --radius:18px;
+      --max:900px;
+      --shadow:0 18px 45px rgba(0,0,0,0.45);
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:var(--font);
+      background:
+        radial-gradient(1200px 900px at 20% 15%, rgba(125,211,252,0.18), transparent 60%),
+        radial-gradient(1100px 850px at 90% 10%, rgba(167,139,250,0.16), transparent 55%),
+        linear-gradient(180deg, #070a0f, var(--bg));
+      color:var(--text);
+      line-height:1.6;
+      letter-spacing:0.1px;
+    }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:26px 18px 40px;
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(12px);
+    }
+
+    header{
+      padding:16px 16px 10px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+      justify-content:space-between;
+    }
+
+    h1{
+      margin:0;
+      font-size:20px;
+      font-weight:700;
+      letter-spacing:0.2px;
+    }
+
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .progressOuter{
+      width:180px;
+      height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.08);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.10);
+    }
+    .progressInner{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--accent), var(--accent2));
+      transition:width 250ms ease;
+    }
+
+    main{
+      padding:18px 16px 16px;
+    }
+
+    .pageTitle{
+      margin:0 0 10px 0;
+      font-size:18px;
+      font-weight:700;
+    }
+
+    .pageBody{
+      padding:16px;
+      border-radius:var(--radius);
+      background:rgba(0,0,0,0.20);
+      border:1px solid rgba(255,255,255,0.10);
+      color:rgba(255,255,255,0.90);
+      font-size:16px;
+      white-space:normal;
+    }
+
+    .pageBody p{ margin:0 0 12px 0; }
+    .pageBody p:last-child{ margin-bottom:0; }
+
+    footer{
+      padding:14px 16px;
+      border-top:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .btnRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    button{
+      border:1px solid rgba(255,255,255,0.16);
+      background:rgba(255,255,255,0.08);
+      color:var(--text);
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:14px;
+      cursor:pointer;
+      transition:transform 120ms ease, background 120ms ease, border-color 120ms ease;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      backdrop-filter:blur(10px);
+    }
+    button:hover{ transform:translateY(-1px); background:rgba(255,255,255,0.11); border-color:rgba(255,255,255,0.22); }
+    button:active{ transform:translateY(0px); }
+    button:disabled{ opacity:0.5; cursor:not-allowed; transform:none; }
+
+    button.primary{
+      background:linear-gradient(90deg, rgba(125,211,252,0.22), rgba(167,139,250,0.22));
+      border-color:rgba(125,211,252,0.35);
+    }
+
+    .hint{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:12px;
+      padding:3px 7px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.16);
+      background:rgba(0,0,0,0.25);
+      color:rgba(255,255,255,0.82);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div>
+          <h1 id="siteTitle">Reader</h1>
+          <div class="meta">
+            <span id="pageCounter">Page 1 of 1</span>
+            <div class="progressOuter" aria-hidden="true">
+              <div class="progressInner" id="progressInner"></div>
+            </div>
+            <span id="percentDone">0%</span>
+          </div>
+        </div>
+        <div class="hint">
+          Use <span class="kbd">←</span> <span class="kbd">→</span> as well
+        </div>
+      </header>
+
+      <main>
+        <h2 class="pageTitle" id="pageTitle">Loading…</h2>
+        <div class="pageBody" id="pageBody"></div>
+      </main>
+
+      <footer>
+        <div class="btnRow">
+          <button id="btnBack" type="button">Back</button>
+          <button class="primary" id="btnNext" type="button">Forward</button>
+        </div>
+        <div class="hint" id="footerHint"></div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const pages = [
+      {
+        title: "Greeting",
+        body: `
+          <p>Paste your greeting here.</p>
+          <p>Keep it calm and contained.</p>
+        `
+      },
+      {
+        title: "What I have been doing lately",
+        body: `
+          <p>Paste this section here.</p>
+        `
+      },
+      {
+        title: "Reflections",
+        body: `
+          <p>Paste your reflections here.</p>
+        `
+      },
+      {
+        title: "Memories",
+        body: `
+          <p>Paste your memories here.</p>
+        `
+      },
+      {
+        title: "Holiday as friends",
+        body: `
+          <p>Paste your trip proposal here.</p>
+        `
+      }
+    ];
+
+    let index = 0;
+
+    const elTitle = document.getElementById("pageTitle");
+    const elBody = document.getElementById("pageBody");
+    const elCounter = document.getElementById("pageCounter");
+    const elProgress = document.getElementById("progressInner");
+    const elPercent = document.getElementById("percentDone");
+    const elBack = document.getElementById("btnBack");
+    const elNext = document.getElementById("btnNext");
+    const elFooterHint = document.getElementById("footerHint");
+
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    function render(){
+      const total = pages.length;
+      index = clamp(index, 0, total - 1);
+
+      elTitle.textContent = pages[index].title;
+      elBody.innerHTML = pages[index].body;
+
+      elCounter.textContent = `Page ${index + 1} of ${total}`;
+
+      const pct = total === 1 ? 100 : Math.round((index / (total - 1)) * 100);
+      elProgress.style.width = pct + "%";
+      elPercent.textContent = pct + "%";
+
+      elBack.disabled = index === 0;
+      elNext.disabled = index === total - 1;
+
+      if(index === total - 1){
+        elFooterHint.textContent = "End of pages";
+      } else {
+        elFooterHint.textContent = "Forward continues to the next section";
+      }
+
+      window.scrollTo({ top: 0, behaviour: "smooth" });
+    }
+
+    elBack.addEventListener("click", () => { index -= 1; render(); });
+    elNext.addEventListener("click", () => { index += 1; render(); });
+
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "ArrowLeft"){ index -= 1; render(); }
+      if(e.key === "ArrowRight"){ index += 1; render(); }
+    });
+
+    render();
+  </script>
+</body>
+</html>
