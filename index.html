@@ -184,7 +184,7 @@
 
   
     const backgrounds = [
-      "images/bg1.jpeg", "images/bg2.jpeg", "images/bg3.jpeg", "images/bg3.jpeg", "images/bg3.jpeg", "", "", ""
+      "images/bg1.jpeg", "images/bg2.jpeg", "images/bg3.jpeg", "images/bg3.jpeg", "images/bg3.jpeg", "images/bg4.jpeg", "images/bg4.jpeg", ""
     ];
 
     const pagePhotos = [
@@ -246,7 +246,15 @@
     }
 
     backBtn.onclick = () => { i--; render(); };
-    nextBtn.onclick = () => { i++; render(); };
+    nextBtn.onclick = () => {
+      if(i < pages.length - 1){
+        i++;
+        render();
+        return;
+      }
+      window.open("https://www.youtube.com/watch?v=1FVF-9KQiPo", "_blank", "noopener");
+    };
+
 
     document.addEventListener("keydown", e => {
       if(e.key === "ArrowLeft" && i > 0){ i--; render(); }
