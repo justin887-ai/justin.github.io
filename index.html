@@ -38,7 +38,6 @@
       background:transparent;
     }
 
-    /* Makes words stand out over any background image/video without a "box" */
     body::before{
       content:"";
       position:fixed;
@@ -214,6 +213,7 @@
     ];
 
     let i = 0;
+    let transitioning = false;
 
     const textEl = document.getElementById("text");
     const backBtn = document.getElementById("back");
@@ -247,6 +247,8 @@
     }
 
     function render(){
+      transitioning = true;
+    
       textEl.classList.remove("fadeIn");
       textEl.classList.add("fadeOut");
     
@@ -259,25 +261,59 @@
         setPhoto(photo2, ph.b, "");
     
         backBtn.disabled = i === 0;
+        nextBtn.disabled = false;
         nextBtn.textContent = (i === pages.length - 1) ? "Finish" : "Next";
     
         textEl.classList.remove("fadeOut");
         textEl.classList.add("fadeIn");
     
         window.scrollTo({ top: 0, behavior: "smooth" });
+    
+        setTimeout(() => { transitioning = false; }, 260);
       }, 220);
     }
+
     
-    
+    backBtn.onclick = () => {
+      if(transitioning) return;
+      if(i > 0){
+        i--;
+        render();
+      }
+    };
+  
+    nextBtn.onclick = () => {
+      if(transitioning) return;
+  
+      if(i === pages.length - 1){
+        window.location.href = "https://www.youtube.com/watch?v=1FVF-9KQiPo";
+        return;
+      }
+  
+      i++;
+      render();
+    };
 
     document.addEventListener("keydown", e => {
-      if(e.key === "ArrowLeft" && i > 0){ i--; render(); }
-      if(e.key === "ArrowRight" && i < pages.length - 1){ i++; render(); }
+      if(e.key === "ArrowLeft"){
+        if(transitioning) return;
+        if(i > 0){ i--; render(); }
+      }
+  
+      if(e.key === "ArrowRight"){
+        if(transitioning) return;
+  
+        if(i === pages.length - 1){
+          window.location.href = "https://www.youtube.com/watch?v=1FVF-9KQiPo";
+        } else {
+          i++;
+          render();
+        }
+      }
     });
 
-    render();
-  </script>
-</body>
-</html>
+  render();
+</script>
+
 
 
