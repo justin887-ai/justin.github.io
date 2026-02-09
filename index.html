@@ -6,6 +6,21 @@
   <title>Hanuuuu</title>
 
   <style>
+
+    .text{
+      transition: opacity 260ms ease, transform 260ms ease;
+    }
+    
+    .text.fadeOut{
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    
+    .text.fadeIn{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     :root{
       --text:#1f0f14;
       --muted:rgba(31,15,20,0.60);
@@ -232,30 +247,28 @@
     }
 
     function render(){
-      textEl.innerHTML = pages[i];
-      setBackground(backgrounds[i]);
-
-      const ph = pagePhotos[i] || { a:"", b:"" };
-      setPhoto(photo1, ph.a, "");
-      setPhoto(photo2, ph.b, "");
-
-      backBtn.disabled = i === 0;
-      nextBtn.disabled = false;
-      nextBtn.textContent = (i === pages.length - 1) ? "Finish" : "Next";
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      textEl.classList.remove("fadeIn");
+      textEl.classList.add("fadeOut");
+    
+      setTimeout(() => {
+        textEl.innerHTML = pages[i];
+        setBackground(backgrounds[i]);
+    
+        const ph = pagePhotos[i] || { a:"", b:"" };
+        setPhoto(photo1, ph.a, "");
+        setPhoto(photo2, ph.b, "");
+    
+        backBtn.disabled = i === 0;
+        nextBtn.textContent = (i === pages.length - 1) ? "Finish" : "Next";
+    
+        textEl.classList.remove("fadeOut");
+        textEl.classList.add("fadeIn");
+    
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 220);
     }
-
-    backBtn.onclick = () => { i--; render(); };
-    nextBtn.onclick = () => {
-      if(i < pages.length - 1){
-        i++;
-        render();
-        return;
-      }
-      window.open("https://www.youtube.com/watch?v=1FVF-9KQiPo", "_blank", "noopener");
-    };
-
+    
+    
 
     document.addEventListener("keydown", e => {
       if(e.key === "ArrowLeft" && i > 0){ i--; render(); }
